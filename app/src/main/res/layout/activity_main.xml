@@ -16,6 +16,7 @@
         android:gravity="center_vertical"/>
 
     <FrameLayout
+        android:id="@+id/fr"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -31,11 +32,39 @@
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="54dp"
-            android:layout_height="54dp"
+            android:layout_width="100px"
+            android:layout_height="100px"
             android:layout_gravity="center_vertical"
-            android:background="@drawable/hinh22"
-            app:srcCompat="@drawable/hinh22"
+
+            app:srcCompat="@drawable/tron"
+
+            />
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="100px"
+            android:layout_height="100px"
+            android:layout_gravity="center_vertical"
+
+            app:srcCompat="@drawable/tamgiac"
+
+            />
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="100px"
+            android:layout_height="100px"
+            android:layout_gravity="center_vertical"
+
+            app:srcCompat="@drawable/vuong"
+
+            />
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="100px"
+            android:layout_height="100px"
+            android:layout_gravity="center_vertical"
+
+            app:srcCompat="@drawable/tron"
 
             />
 
