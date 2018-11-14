@@ -50,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
     private Handler handler = new Handler();
     private Timer timer  = new Timer();
     //khai bao bien phan biet
+    private int core=0;
+    private int checker_core;
     private boolean checker = false;
     private boolean checker_start = false;
     @Override
@@ -58,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //anh xa view
         anhxa();
-        txcore.setText("core");
+
         //khoi tao cac thuoc tinh view
         khoitao();
     }
@@ -107,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
                         boxtraiphai();
                         // box cham box
                         vacham();
-                        txcore.setText("core");
+
 
 
                     }
@@ -174,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
         if (box3X < 0) {
             box3X = framheiht;
             box3Y = (int) Math.floor(Math.random() * (framheiht - img3.getHeight()));
-            img1.setY(box1Y);
+            img3.setY(box3Y);
         }
         img3.setX(box3X);
     }
@@ -183,13 +185,17 @@ public class MainActivity extends AppCompatActivity {
         //box tam giac
         //vi tri cua box duoc lay tren goc hinh vuong phia truoc va ben tren
         //chuyen vi tri box ve trung tam box
+        //tao diem core
+
         boxrunXcenter = (int) (img1.getX() + img1.getWidth() / 2);
         boxrunYcenter = (int) img1.getY() + img1.getHeight() / 2;
         // 0<=boxrunx<=box.width
         //  box.getY<=boxruny<=box.getY+box.height
         if ((boxrunYcenter <= (img.getY() + img.getHeight())) && (boxrunYcenter >= img.getY()) && (boxrunXcenter >= 0) && (boxrunXcenter <= img.getWidth())) {
             box1X = framheiht;
-
+            if(checker_core==1){core = core-10;}else {core = core+10;}
+            checker_core =1;
+            txcore.setText("COre: "+core);
             img.setImageResource(R.drawable.tamgiac);
 
             //img.refreshDrawableState();
@@ -203,7 +209,9 @@ public class MainActivity extends AppCompatActivity {
         //  box.getY<=boxruny<=box.getY+box.height
         if ((box2runYcenter <= (img.getY() + img.getHeight())) && (box2runYcenter >= img.getY()) && (box2runXcenter >= 0) && (box2runXcenter <= img.getWidth())) {
             box2X = framheiht;
-
+            if(checker_core==2){core = core-10;}else {core = core+10;}
+            checker_core =2;
+            txcore.setText("COre: "+core);
             img.setImageResource(R.drawable.vuong);
 
             //img.refreshDrawableState();
@@ -217,11 +225,14 @@ public class MainActivity extends AppCompatActivity {
         //  box.getY<=boxruny<=box.getY+box.height
         if ((box3runYcenter <= (img.getY() + img.getHeight())) && (box3runYcenter >= img.getY()) && (box3runXcenter >= 0) && (box3runXcenter <= img.getWidth())) {
             box3X = framheiht;
-
+            if(checker_core==3){core = core-10;}else {core = core+10;}
+            checker_core =3;
+            txcore.setText("COre: "+core);
             img.setImageResource(R.drawable.tron);
 
             //img.refreshDrawableState();
         }
+
     }
 
 
