@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
             framwidth = fram.getWidth();
             boxheight = img.getHeight();
             //ham ghi de,luon chay voi thoi gian tu 0-20 minis
+            //di chuyen cac box va xu ly va cham
             changlog();
 
         }else
@@ -91,6 +92,30 @@ public class MainActivity extends AppCompatActivity {
 
         return true;
     }
+    //ham chang log cau hinh view dien hoat
+    private void changlog() {
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        // box di chuyen len xuong
+                        boxlenxuong();
+
+                        // box di chuyen trai phai
+                        boxtraiphai();
+                        // box cham box
+                        vacham();
+                        txcore.setText("core");
+
+
+                    }
+                });
+            }
+        }, 0, 20);
+    }
+
     //khoi tao
     private void khoitao() {
         boxY = 500;
@@ -110,104 +135,93 @@ public class MainActivity extends AppCompatActivity {
         img2 = (ImageView) findViewById(R.id.imageView2);
         img3 = (ImageView) findViewById(R.id.imageView3);
     }
-    //ham chang log cau hinh view dien hoat
-    private void changlog() {
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        // box di chuyen len xuong
-                        if (checker == true) {
-                            boxY -= 20;
-                        } else {
-                            boxY += 20;
-                        }
-                        // box di chuyen trong man hinh
-                        if (boxY < 0) {
-                            boxY = 0;
-                        }
-                        if (boxY > framheiht - boxheight) {
-                            boxY = framheiht - boxheight;
-                        }
-                        img.setY(boxY);
+    //box di chuyen len xuong
+    private void boxlenxuong(){
+        if (checker == true) {
+            boxY -= 20;
+        } else {
+            boxY += 20;
+        }
+        // box di chuyen trong man hinh
+        if (boxY < 0) {
+            boxY = 0;
+        }
+        if (boxY > framheiht - boxheight) {
+            boxY = framheiht - boxheight;
+        }
+        img.setY(boxY);
+    }
+    // box di chuyen trai phai
+    private void boxtraiphai(){
+        box1X -= 12;
+        box2X -= 12;
+        box3X -= 12;
+        //box 1
+        if (box1X < 0) {
+            box1X = framheiht;
+            box1Y = (int) Math.floor(Math.random() * (framheiht - img1.getHeight()));
+            img1.setY(box1Y);
+        }
+        img1.setX(box1X);
+        //box2
+        if (box2X < 0) {
+            box2X = framheiht;
+            box2Y = (int) Math.floor(Math.random() * (framheiht - img2.getHeight()));
+            img2.setY(box2Y);
+        }
+        img2.setX(box2X);
+        //box3
+        if (box3X < 0) {
+            box3X = framheiht;
+            box3Y = (int) Math.floor(Math.random() * (framheiht - img3.getHeight()));
+            img1.setY(box1Y);
+        }
+        img3.setX(box3X);
+    }
+    // box va cham
+    private void vacham(){
+        //box tam giac
+        //vi tri cua box duoc lay tren goc hinh vuong phia truoc va ben tren
+        //chuyen vi tri box ve trung tam box
+        boxrunXcenter = (int) (img1.getX() + img1.getWidth() / 2);
+        boxrunYcenter = (int) img1.getY() + img1.getHeight() / 2;
+        // 0<=boxrunx<=box.width
+        //  box.getY<=boxruny<=box.getY+box.height
+        if ((boxrunYcenter <= (img.getY() + img.getHeight())) && (boxrunYcenter >= img.getY()) && (boxrunXcenter >= 0) && (boxrunXcenter <= img.getWidth())) {
+            box1X = framheiht;
 
-                        // box di chuyen trai phai
-                        box1X -= 12;
-                        box2X -= 12;
-                        box3X -= 12;
-                        //box 1
-                        if (box1X < 0) {
-                            box1X = framheiht;
-                            box1Y = (int) Math.floor(Math.random() * (framheiht - img1.getHeight()));
-                            img1.setY(box1Y);
-                        }
-                        img1.setX(box1X);
-                        //box2
-                        if (box2X < 0) {
-                            box2X = framheiht;
-                            box2Y = (int) Math.floor(Math.random() * (framheiht - img2.getHeight()));
-                            img2.setY(box2Y);
-                        }
-                        img2.setX(box2X);
-                        //box3
-                        if (box3X < 0) {
-                            box3X = framheiht;
-                            box3Y = (int) Math.floor(Math.random() * (framheiht - img3.getHeight()));
-                            img1.setY(box1Y);
-                        }
-                        img3.setX(box3X);
-                        // box cham box
-                        //box tam giac
-                        //vi tri cua box duoc lay tren goc hinh vuong phia truoc va ben tren
-                        //chuyen vi tri box ve trung tam box
-                        boxrunXcenter = (int) (img1.getX() + img1.getWidth() / 2);
-                        boxrunYcenter = (int) img1.getY() + img1.getHeight() / 2;
-                        // 0<=boxrunx<=box.width
-                        //  box.getY<=boxruny<=box.getY+box.height
-                        if ((boxrunYcenter <= (img.getY() + img.getHeight())) && (boxrunYcenter >= img.getY()) && (boxrunXcenter >= 0) && (boxrunXcenter <= img.getWidth())) {
-                            box1X = framheiht;
+            img.setImageResource(R.drawable.tamgiac);
 
-                            img.setImageResource(R.drawable.tamgiac);
+            //img.refreshDrawableState();
+        }
+        //box vuong
+        //vi tri cua box duoc lay tren goc hinh vuong phia truoc va ben tren
+        //chuyen vi tri box ve trung tam box
+        box2runXcenter = (int) (img2.getX() + img2.getWidth() / 2);
+        box2runYcenter = (int) img2.getY() + img2.getHeight() / 2;
+        // 0<=boxrunx<=box.width
+        //  box.getY<=boxruny<=box.getY+box.height
+        if ((box2runYcenter <= (img.getY() + img.getHeight())) && (box2runYcenter >= img.getY()) && (box2runXcenter >= 0) && (box2runXcenter <= img.getWidth())) {
+            box2X = framheiht;
 
-                            //img.refreshDrawableState();
-                        }
-                        //box vuong
-                        //vi tri cua box duoc lay tren goc hinh vuong phia truoc va ben tren
-                        //chuyen vi tri box ve trung tam box
-                        box2runXcenter = (int) (img2.getX() + img2.getWidth() / 2);
-                        box2runYcenter = (int) img2.getY() + img2.getHeight() / 2;
-                        // 0<=boxrunx<=box.width
-                        //  box.getY<=boxruny<=box.getY+box.height
-                        if ((box2runYcenter <= (img.getY() + img.getHeight())) && (box2runYcenter >= img.getY()) && (box2runXcenter >= 0) && (box2runXcenter <= img.getWidth())) {
-                            box2X = framheiht;
+            img.setImageResource(R.drawable.vuong);
 
-                            img.setImageResource(R.drawable.vuong);
+            //img.refreshDrawableState();
+        }
+        //box tron
+        //vi tri cua box duoc lay tren goc hinh vuong phia truoc va ben tren
+        //chuyen vi tri box ve trung tam box
+        box3runXcenter = (int) (img3.getX() + img3.getWidth() / 2);
+        box3runYcenter = (int) img3.getY() + img3.getHeight() / 2;
+        // 0<=boxrunx<=box.width
+        //  box.getY<=boxruny<=box.getY+box.height
+        if ((box3runYcenter <= (img.getY() + img.getHeight())) && (box3runYcenter >= img.getY()) && (box3runXcenter >= 0) && (box3runXcenter <= img.getWidth())) {
+            box3X = framheiht;
 
-                            //img.refreshDrawableState();
-                        }
-                        //box tron
-                        //vi tri cua box duoc lay tren goc hinh vuong phia truoc va ben tren
-                        //chuyen vi tri box ve trung tam box
-                        box3runXcenter = (int) (img3.getX() + img3.getWidth() / 2);
-                        box3runYcenter = (int) img3.getY() + img3.getHeight() / 2;
-                        // 0<=boxrunx<=box.width
-                        //  box.getY<=boxruny<=box.getY+box.height
-                        if ((box3runYcenter <= (img.getY() + img.getHeight())) && (box3runYcenter >= img.getY()) && (box3runXcenter >= 0) && (box3runXcenter <= img.getWidth())) {
-                            box3X = framheiht;
+            img.setImageResource(R.drawable.tron);
 
-                            img.setImageResource(R.drawable.tron);
-
-                            //img.refreshDrawableState();
-                        }
-                        txcore.setText("core");
-
-
-                    }
-                });
-            }
-        }, 0, 20);
+            //img.refreshDrawableState();
+        }
     }
 
 
