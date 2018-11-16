@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
     //khai bao bien phan biet
     private boolean checker = false;
     private boolean checker_start = false;
+    public box bx= new box();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +62,12 @@ public class MainActivity extends AppCompatActivity {
         txcore.setText("core");
         //khoi tao cac thuoc tinh view
         khoitao();
+
+    }
+    
+    void run1(){
+        bx.box_y=500;
+        bx.changlog1();
     }
     // ham nay duoc goi khi khong cham va cham len man hinh
     public boolean onTouchEvent(MotionEvent  ev){
@@ -101,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         // box di chuyen len xuong
-                        boxlenxuong();
+
 
                         // box di chuyen trai phai
                         boxtraiphai();
