@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
         //bx.box_view.setY(500);
 
-        bx.setbox(0,500,img, framheiht,0,20);
+        bx.setbox(0,500, framheiht,0,20);
        // bx.box_view.setVisibility(View.GONE);
 
 
@@ -146,10 +146,7 @@ return true;
     private void anhxa() {
         txcore = (TextView) findViewById(R.id.textView);
         txtap = (TextView) findViewById(R.id.textView2);
-        img = (ImageView) findViewById(R.id.imageView);
-        img1 = (ImageView) findViewById(R.id.imageView1);
-        img2 = (ImageView) findViewById(R.id.imageView2);
-        img3 = (ImageView) findViewById(R.id.imageView3);
+      img = (ImageView) findViewById(R.id.imageView);
     }
     //box di chuyen len xuong
 
