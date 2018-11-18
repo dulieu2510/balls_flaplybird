@@ -23,58 +23,45 @@ public class MainActivity extends AppCompatActivity {
     private ImageView img1;
     private ImageView img2;
     private ImageView img3;
+    //khai bao thuoc tinh cua view
+    //toa do Y cua box di chuyen len xuong
+    private int boxY;
+    //toa do X,Y cua box chay ngang toa do goc vuong phia truoc ben tren
+    private int box1X;
+    private int box1Y;
+    private int box2X;
+    private int box2Y;
+    private int box3X;
+    private int box3Y;
+    // dai,rong fram
+    private int framheiht;
+    private  int boxheight;
+    private  int framwidth;
+    //toa do X,Y cua box chay ngang nhung lay lai toa do trung tam
+    private int  boxrunXcenter;
+    private int boxrunYcenter;
 
-    //khai bao doi tuong timer,handler dien hoat su thay doi cua view
+    private int  box2runXcenter;
+    private int box2runYcenter;
+
+    private int  box3runXcenter;
+    private int box3runYcenter;
+    //khai bao CLASS tao timer request len view
     private Handler handler = new Handler();
     private Timer timer  = new Timer();
     //khai bao bien phan biet
     private boolean checker = false;
     private boolean checker_start = false;
-    //khai bao doi tuong nguoi dung
-    user us = new user();
-    // khai bao doi tuong box
-    private box bx= new box();
-    private box bx_ngang= new box();
-    private box bx_ngang2= new box();
-    private box bx_ngang3= new box();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //anh xa view
         anhxa();
-        //set user
-        us.setCore(0);
-        //set bx - box di chuyen len xuong
-        bx.setbox_x(200);
-        bx.setbox_y(500);
-        bx.setbox_boxrun_x(0);
-        bx.setbox_boxrun_y(22);
-        bx.setimage(img);
-        bx.setObjec(0);
-        //set bx_ngang - box di chuyen ngang
-        bx_ngang.setbox_x(-80);
-        bx_ngang.setbox_y(-80);
-        bx_ngang.setbox_boxrun_x(13);
-        bx_ngang.setbox_boxrun_y(0);
-        bx_ngang.setimage(img1);
-        bx_ngang.setObjec(1);
-        //set bx_ngang - box di chuyen ngang 2
-        bx_ngang2.setbox_x(-80);
-        bx_ngang2.setbox_y(-80);
-        bx_ngang2.setbox_boxrun_x(13);
-        bx_ngang2.setbox_boxrun_y(0);
-        bx_ngang2.setimage(img2);
-        bx_ngang2.setObjec(2);
-        //set bx_ngang - box di chuyen ngang 3
-        bx_ngang3.setbox_x(-80);
-        bx_ngang3.setbox_y(-80);
-        bx_ngang3.setbox_boxrun_x(13);
-        bx_ngang3.setbox_boxrun_y(0);
-        bx_ngang3.setimage(img3);
-        bx_ngang3.setObjec(3);
-      }
+        txcore.setText("core");
+        //khoi tao cac thuoc tinh view
+        khoitao();
+    }
     // ham nay duoc goi khi khong cham va cham len man hinh
     public boolean onTouchEvent(MotionEvent  ev){
         if(checker_start==false){
@@ -83,34 +70,30 @@ public class MainActivity extends AppCompatActivity {
             txtap.setVisibility(View.GONE);
             //anh xa layout frameheght, vi oncreate khong tao duoc
             FrameLayout fram = (FrameLayout) findViewById(R.id.fr) ;
-            //lay height fram cho bx
-            bx.setframx(fram.getHeight());
-            bx.setframy( fram.getWidth());
-            //lay height fram cho bx_ngang
-            bx_ngang.setframy( fram.getWidth());
-            bx_ngang.setframx(fram.getHeight());
-            bx_ngang2.setframy( fram.getWidth());
-            bx_ngang2.setframx(fram.getHeight());
-            bx_ngang3.setframy( fram.getWidth());
-            bx_ngang3.setframx(fram.getHeight());
-             changlog();
-        }else
-            //get action luon trong trang thai thay doi, gan vao phan biet cheker
+            //lay height cua box va lay heught cua fram
+            framheiht = fram.getHeight();
+            framwidth = fram.getWidth();
+            boxheight = img.getHeight();
+            //ham ghi de,luon chay voi thoi gian tu 0-20 minis
+            //di chuyen cac box va xu ly va cham
+            changlog();
 
+        }else
+            //getaction luon trong trang thai thay doi, gan vao bien phan biet cheker
             if(ev.getAction() == MotionEvent.ACTION_DOWN) {
 
-                us.setTouch_checker(true);
-
+                checker = true;
             }else if(ev.getAction() == MotionEvent.ACTION_UP){
-                us.setTouch_checker(false);
+
+                checker = false;
             }
-        bx.setcheck(us.isTouch_checker());
+
 
 
         return true;
     }
-    //ham chang log dien hoat thay doi cua view
-    private boolean changlog(){
+    //ham chang log cau hinh view dien hoat
+    private void changlog() {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -118,27 +101,30 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         // box di chuyen len xuong
-                        bx.review();
+                        boxlenxuong();
 
-                        // box di chuyen ngang
-                        bx_ngang.review();
-                        bx_ngang2.review();
-                        bx_ngang3.review();
-                        //box va cham
-                        bx.vacham(bx.getBox1center_x(),bx.getBox1center_y(),bx.getObjec1());
-                        bx_ngang.vacham(bx.getBox1center_x(),bx.getBox1center_y(),bx.getObjec1());
-                        bx_ngang2.vacham(bx.getBox1center_x(),bx.getBox1center_y(),bx.getObjec1());
-                        bx_ngang3.vacham(bx.getBox1center_x(),bx.getBox1center_y(),bx.getObjec1());
-                        // tinh diem core
-                       // us.setCore();
-                        // tinh diem core
-                        txcore.setText( "core : "+us.getCore() +" ob "+bx.getObjec1());
+                        // box di chuyen trai phai
+                        boxtraiphai();
+                        // box cham box
+                        vacham();
+                        txcore.setText("core");
+
 
                     }
                 });
             }
-        }, 0, 50);
-    return true;
+        }, 0, 20);
+    }
+
+    //khoi tao
+    private void khoitao() {
+        boxY = 500;
+        box1X = -80;
+        box1Y = -80;
+        box2X = -80;
+        box2Y = -80;
+        box3X = -80;
+        box3Y = -80;
     }
     //anh xa
     private void anhxa() {
@@ -148,7 +134,95 @@ public class MainActivity extends AppCompatActivity {
         img1 = (ImageView) findViewById(R.id.imageView1);
         img2 = (ImageView) findViewById(R.id.imageView2);
         img3 = (ImageView) findViewById(R.id.imageView3);
-
     }
+    //box di chuyen len xuong
+    private void boxlenxuong(){
+        if (checker == true) {
+            boxY -= 20;
+        } else {
+            boxY += 20;
+        }
+        // box di chuyen trong man hinh
+        if (boxY < 0) {
+            boxY = 0;
+        }
+        if (boxY > framheiht - boxheight) {
+            boxY = framheiht - boxheight;
+        }
+        img.setY(boxY);
+    }
+    // box di chuyen trai phai
+    private void boxtraiphai(){
+        box1X -= 12;
+        box2X -= 12;
+        box3X -= 12;
+        //box 1
+        if (box1X < 0) {
+            box1X = framheiht;
+            box1Y = (int) Math.floor(Math.random() * (framheiht - img1.getHeight()));
+            img1.setY(box1Y);
+        }
+        img1.setX(box1X);
+        //box2
+        if (box2X < 0) {
+            box2X = framheiht;
+            box2Y = (int) Math.floor(Math.random() * (framheiht - img2.getHeight()));
+            img2.setY(box2Y);
+        }
+        img2.setX(box2X);
+        //box3
+        if (box3X < 0) {
+            box3X = framheiht;
+            box3Y = (int) Math.floor(Math.random() * (framheiht - img3.getHeight()));
+            img1.setY(box1Y);
+        }
+        img3.setX(box3X);
+    }
+    // box va cham
+    private void vacham(){
+        //box tam giac
+        //vi tri cua box duoc lay tren goc hinh vuong phia truoc va ben tren
+        //chuyen vi tri box ve trung tam box
+        boxrunXcenter = (int) (img1.getX() + img1.getWidth() / 2);
+        boxrunYcenter = (int) img1.getY() + img1.getHeight() / 2;
+        // 0<=boxrunx<=box.width
+        //  box.getY<=boxruny<=box.getY+box.height
+        if ((boxrunYcenter <= (img.getY() + img.getHeight())) && (boxrunYcenter >= img.getY()) && (boxrunXcenter >= 0) && (boxrunXcenter <= img.getWidth())) {
+            box1X = framheiht;
+
+            img.setImageResource(R.drawable.tamgiac);
+
+            //img.refreshDrawableState();
+        }
+        //box vuong
+        //vi tri cua box duoc lay tren goc hinh vuong phia truoc va ben tren
+        //chuyen vi tri box ve trung tam box
+        box2runXcenter = (int) (img2.getX() + img2.getWidth() / 2);
+        box2runYcenter = (int) img2.getY() + img2.getHeight() / 2;
+        // 0<=boxrunx<=box.width
+        //  box.getY<=boxruny<=box.getY+box.height
+        if ((box2runYcenter <= (img.getY() + img.getHeight())) && (box2runYcenter >= img.getY()) && (box2runXcenter >= 0) && (box2runXcenter <= img.getWidth())) {
+            box2X = framheiht;
+
+            img.setImageResource(R.drawable.vuong);
+
+            //img.refreshDrawableState();
+        }
+        //box tron
+        //vi tri cua box duoc lay tren goc hinh vuong phia truoc va ben tren
+        //chuyen vi tri box ve trung tam box
+        box3runXcenter = (int) (img3.getX() + img3.getWidth() / 2);
+        box3runYcenter = (int) img3.getY() + img3.getHeight() / 2;
+        // 0<=boxrunx<=box.width
+        //  box.getY<=boxruny<=box.getY+box.height
+        if ((box3runYcenter <= (img.getY() + img.getHeight())) && (box3runYcenter >= img.getY()) && (box3runXcenter >= 0) && (box3runXcenter <= img.getWidth())) {
+            box3X = framheiht;
+
+            img.setImageResource(R.drawable.tron);
+
+            //img.refreshDrawableState();
+        }
+    }
+
 
 }
