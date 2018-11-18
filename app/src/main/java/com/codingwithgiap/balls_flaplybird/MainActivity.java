@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
     //khai bao bien phan biet
     private boolean checker = false;
     private boolean checker_start = false;
+    //khai bao doi tuong nguoi dung
+    user us = new user();
     // khai bao doi tuong box
     private box bx= new box();
     private box bx_ngang= new box();
@@ -42,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //anh xa view
         anhxa();
+        //set user
+        us.setCore(0);
         //set bx - box di chuyen len xuong
         bx.setbox_x(200);
         bx.setbox_y(500);
@@ -95,12 +99,12 @@ public class MainActivity extends AppCompatActivity {
 
             if(ev.getAction() == MotionEvent.ACTION_DOWN) {
 
-                checker = true;
-            }else if(ev.getAction() == MotionEvent.ACTION_UP){
+                us.setTouch_checker(true);
 
-                checker = false;
+            }else if(ev.getAction() == MotionEvent.ACTION_UP){
+                us.setTouch_checker(false);
             }
-        bx.setcheck(checker);
+        bx.setcheck(us.isTouch_checker());
 
 
         return true;
@@ -121,16 +125,19 @@ public class MainActivity extends AppCompatActivity {
                         bx_ngang2.review();
                         bx_ngang3.review();
                         //box va cham
-
-                        bx_ngang.vacham(bx.getBox1center_x(),bx.getBox1center_y());
-                        bx_ngang2.vacham(bx.getBox1center_x(),bx.getBox1center_y());
-                        bx_ngang3.vacham(bx.getBox1center_x(),bx.getBox1center_y());
-                        txcore.setText(""+checker+" set "+(bx.getBox1center_x()+":"+bx.getBox1center_y()));
+                        bx.vacham(bx.getBox1center_x(),bx.getBox1center_y(),bx.getObjec1());
+                        bx_ngang.vacham(bx.getBox1center_x(),bx.getBox1center_y(),bx.getObjec1());
+                        bx_ngang2.vacham(bx.getBox1center_x(),bx.getBox1center_y(),bx.getObjec1());
+                        bx_ngang3.vacham(bx.getBox1center_x(),bx.getBox1center_y(),bx.getObjec1());
+                        // tinh diem core
+                       // us.setCore();
+                        // tinh diem core
+                        txcore.setText( "core : "+us.getCore() +" ob "+bx.getObjec1());
 
                     }
                 });
             }
-        }, 0, 20);
+        }, 0, 50);
     return true;
     }
     //anh xa
