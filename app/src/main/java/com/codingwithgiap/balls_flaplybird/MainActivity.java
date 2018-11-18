@@ -146,7 +146,7 @@ return true;
     private void anhxa() {
         txcore = (TextView) findViewById(R.id.textView);
         txtap = (TextView) findViewById(R.id.textView2);
-      img = (ImageView) findViewById(R.id.imageView);
+        img = (ImageView) findViewById(R.id.imageView);
     }
     //box di chuyen len xuong
 
