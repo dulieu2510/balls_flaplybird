@@ -23,38 +23,18 @@ public class MainActivity extends AppCompatActivity {
     private ImageView img1;
     private ImageView img2;
     private ImageView img3;
-    //khai bao thuoc tinh cua view
-    //toa do Y cua box di chuyen len xuong
-    private int boxY;
-    private int boxX;
-    //toa do X,Y cua box chay ngang toa do goc vuong phia truoc ben tren
-    private int box1X;
-    private int box1Y;
-    private int box2X;
-    private int box2Y;
-    private int box3X;
-    private int box3Y;
-    // dai,rong fram
-    public int framheiht;
-    private  int boxheight;
-    public  int framwidth;
-    //toa do X,Y cua box chay ngang nhung lay lai toa do trung tam
-    private int  boxrunXcenter;
-    private int boxrunYcenter;
 
-    private int  box2runXcenter;
-    private int box2runYcenter;
-
-    private int  box3runXcenter;
-    private int box3runYcenter;
-    //khai bao CLASS tao timer request len view
+    //khai bao doi tuong timer,handler dien hoat su thay doi cua view
     private Handler handler = new Handler();
     private Timer timer  = new Timer();
     //khai bao bien phan biet
     private boolean checker = false;
     private boolean checker_start = false;
+    // khai bao doi tuong box
     private box bx= new box();
     private box bx_ngang= new box();
+    private box bx_ngang2= new box();
+    private box bx_ngang3= new box();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,29 +42,35 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //anh xa view
         anhxa();
-       // txcore.setText("core");
-        //khoi tao cac thuoc tinh view
-
-
-
-        //bx.box_view.setY(500);
         //set bx - box di chuyen len xuong
-        bx.setbox_x(0);
+        bx.setbox_x(200);
         bx.setbox_y(500);
         bx.setbox_boxrun_x(0);
-        bx.setbox_boxrun_y(12);
+        bx.setbox_boxrun_y(22);
         bx.setimage(img);
+        bx.setObjec(0);
         //set bx_ngang - box di chuyen ngang
-        bx_ngang.setbox_x(200);
-        bx_ngang.setbox_y(100);
+        bx_ngang.setbox_x(-80);
+        bx_ngang.setbox_y(-80);
         bx_ngang.setbox_boxrun_x(13);
         bx_ngang.setbox_boxrun_y(0);
         bx_ngang.setimage(img1);
-       // bx.box_view.setVisibility(View.GONE);
-
-
-    }
-
+        bx_ngang.setObjec(1);
+        //set bx_ngang - box di chuyen ngang 2
+        bx_ngang2.setbox_x(-80);
+        bx_ngang2.setbox_y(-80);
+        bx_ngang2.setbox_boxrun_x(13);
+        bx_ngang2.setbox_boxrun_y(0);
+        bx_ngang2.setimage(img2);
+        bx_ngang2.setObjec(2);
+        //set bx_ngang - box di chuyen ngang 3
+        bx_ngang3.setbox_x(-80);
+        bx_ngang3.setbox_y(-80);
+        bx_ngang3.setbox_boxrun_x(13);
+        bx_ngang3.setbox_boxrun_y(0);
+        bx_ngang3.setimage(img3);
+        bx_ngang3.setObjec(3);
+      }
     // ham nay duoc goi khi khong cham va cham len man hinh
     public boolean onTouchEvent(MotionEvent  ev){
         if(checker_start==false){
@@ -93,21 +79,19 @@ public class MainActivity extends AppCompatActivity {
             txtap.setVisibility(View.GONE);
             //anh xa layout frameheght, vi oncreate khong tao duoc
             FrameLayout fram = (FrameLayout) findViewById(R.id.fr) ;
-            //lay height cua box va lay heught cua fram
-            framheiht = fram.getHeight();
-            framwidth = fram.getWidth();
-            boxheight = bx.getimage().getHeight();
-            bx.setframx(framheiht);
-
-
-            bx_ngang.setframy(framwidth);
+            //lay height fram cho bx
+            bx.setframx(fram.getHeight());
+            bx.setframy( fram.getWidth());
+            //lay height fram cho bx_ngang
+            bx_ngang.setframy( fram.getWidth());
+            bx_ngang.setframx(fram.getHeight());
+            bx_ngang2.setframy( fram.getWidth());
+            bx_ngang2.setframx(fram.getHeight());
+            bx_ngang3.setframy( fram.getWidth());
+            bx_ngang3.setframx(fram.getHeight());
              changlog();
-
         }else
-            //getaction luon trong trang thai thay doi, gan vao bien phan biet cheker
-
-
-
+            //get action luon trong trang thai thay doi, gan vao phan biet cheker
 
             if(ev.getAction() == MotionEvent.ACTION_DOWN) {
 
@@ -121,9 +105,7 @@ public class MainActivity extends AppCompatActivity {
 
         return true;
     }
-    //ham chang log cau hinh view dien hoat
-
-//changlog
+    //ham chang log dien hoat thay doi cua view
     private boolean changlog(){
         timer.schedule(new TimerTask() {
             @Override
@@ -133,26 +115,23 @@ public class MainActivity extends AppCompatActivity {
                     public void run() {
                         // box di chuyen len xuong
                         bx.review();
-                        txcore.setText(""+checker+" set ");
+
                         // box di chuyen ngang
                         bx_ngang.review();
+                        bx_ngang2.review();
+                        bx_ngang3.review();
+                        //box va cham
+
+                        bx_ngang.vacham(bx.getBox1center_x(),bx.getBox1center_y());
+                        bx_ngang2.vacham(bx.getBox1center_x(),bx.getBox1center_y());
+                        bx_ngang3.vacham(bx.getBox1center_x(),bx.getBox1center_y());
+                        txcore.setText(""+checker+" set "+(bx.getBox1center_x()+":"+bx.getBox1center_y()));
+
                     }
                 });
             }
         }, 0, 20);
-
-return true;
-    }
-    //khoi tao
-    private void khoitao() {
-        boxY = 500;
-        boxX = 0;
-        box1X = -80;
-        box1Y = -80;
-        box2X = -80;
-        box2Y = -80;
-        box3X = -80;
-        box3Y = -80;
+    return true;
     }
     //anh xa
     private void anhxa() {
@@ -160,10 +139,9 @@ return true;
         txtap = (TextView) findViewById(R.id.textView2);
         img = (ImageView) findViewById(R.id.imageView);
         img1 = (ImageView) findViewById(R.id.imageView1);
+        img2 = (ImageView) findViewById(R.id.imageView2);
+        img3 = (ImageView) findViewById(R.id.imageView3);
 
     }
-    //box di chuyen len xuong
-
-
 
 }
