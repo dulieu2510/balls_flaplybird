@@ -132,11 +132,10 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         // box di chuyen len xuong
-                        bx.getimage().setY(bx.dichuyen());
-
-                        txcore.setText(""+checker+" set "+bx.dichuyen());
+                        bx.review();
+                        txcore.setText(""+checker+" set ");
                         // box di chuyen ngang
-                        bx_ngang.getimage().setX(bx_ngang.dichuyen());
+                        bx_ngang.review();
                     }
                 });
             }
