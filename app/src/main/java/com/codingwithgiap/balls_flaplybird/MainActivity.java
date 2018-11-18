@@ -53,7 +53,8 @@ public class MainActivity extends AppCompatActivity {
     //khai bao bien phan biet
     private boolean checker = false;
     private boolean checker_start = false;
-    public box bx= new box();
+    private box bx= new box();
+    private box bx_ngang= new box();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,8 +68,12 @@ public class MainActivity extends AppCompatActivity {
 
 
         //bx.box_view.setY(500);
-
-        bx.setbox(0,500, framheiht,0,20);
+        //set bx - box di chuyen len xuong
+        bx.setbox(0,500, 0,12);
+        bx.setimage(img);
+        //set bx_ngang - box di chuyen ngang
+        bx_ngang.setbox(200,100, 13,0);
+        bx_ngang.setimage(img1);
        // bx.box_view.setVisibility(View.GONE);
 
 
@@ -86,7 +91,9 @@ public class MainActivity extends AppCompatActivity {
             framheiht = fram.getHeight();
             framwidth = fram.getWidth();
             boxheight = bx.box_view.getHeight();
-            changlog();
+            bx.setfram(framheiht);
+            bx_ngang.setframw(framwidth);
+             changlog();
 
         }else
             //getaction luon trong trang thai thay doi, gan vao bien phan biet cheker
@@ -101,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
 
                 checker = false;
             }
-            bx.setcheck(checker);
+        bx.setcheck(checker);
 
 
         return true;
@@ -117,13 +124,10 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         // box di chuyen len xuong
-
-
-
                         bx.box_view.setY(bx.dichuyen());
                         txcore.setText(""+checker+" set "+bx.dichuyen());
-
-
+                        // box di chuyen ngang
+                        bx_ngang.box_view.setX(bx_ngang.dichuyen());
                     }
                 });
             }
@@ -147,6 +151,8 @@ return true;
         txcore = (TextView) findViewById(R.id.textView);
         txtap = (TextView) findViewById(R.id.textView2);
         img = (ImageView) findViewById(R.id.imageView);
+        img1 = (ImageView) findViewById(R.id.imageView1);
+
     }
     //box di chuyen len xuong
 
