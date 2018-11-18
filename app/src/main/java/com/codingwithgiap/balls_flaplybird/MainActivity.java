@@ -69,10 +69,16 @@ public class MainActivity extends AppCompatActivity {
 
         //bx.box_view.setY(500);
         //set bx - box di chuyen len xuong
-        bx.setbox(0,500, 0,12);
+        bx.setbox_x(0);
+        bx.setbox_y(500);
+        bx.setbox_boxrun_x(0);
+        bx.setbox_boxrun_y(12);
         bx.setimage(img);
         //set bx_ngang - box di chuyen ngang
-        bx_ngang.setbox(200,100, 13,0);
+        bx_ngang.setbox_x(200);
+        bx_ngang.setbox_y(100);
+        bx_ngang.setbox_boxrun_x(13);
+        bx_ngang.setbox_boxrun_y(0);
         bx_ngang.setimage(img1);
        // bx.box_view.setVisibility(View.GONE);
 
@@ -90,9 +96,11 @@ public class MainActivity extends AppCompatActivity {
             //lay height cua box va lay heught cua fram
             framheiht = fram.getHeight();
             framwidth = fram.getWidth();
-            boxheight = bx.box_view.getHeight();
-            bx.setfram(framheiht);
-            bx_ngang.setframw(framwidth);
+            boxheight = bx.getimage().getHeight();
+            bx.setframx(framheiht);
+
+
+            bx_ngang.setframy(framwidth);
              changlog();
 
         }else
@@ -124,10 +132,11 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         // box di chuyen len xuong
-                        bx.box_view.setY(bx.dichuyen());
+                        bx.getimage().setY(bx.dichuyen());
+
                         txcore.setText(""+checker+" set "+bx.dichuyen());
                         // box di chuyen ngang
-                        bx_ngang.box_view.setX(bx_ngang.dichuyen());
+                        bx_ngang.getimage().setX(bx_ngang.dichuyen());
                     }
                 });
             }
