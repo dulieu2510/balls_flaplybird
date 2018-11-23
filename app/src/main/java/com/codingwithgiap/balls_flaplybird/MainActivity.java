@@ -1,16 +1,28 @@
 package com.codingwithgiap.balls_flaplybird;
 
+import android.animation.Animator;
+import android.content.Intent;
+import android.graphics.drawable.TransitionDrawable;
 import android.os.Handler;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewAnimationUtils;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.AnimationUtils;
+import android.view.animation.RotateAnimation;
+import android.view.animation.TranslateAnimation;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -23,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
     private ImageView img1;
     private ImageView img2;
     private ImageView img3;
-
     //khai bao doi tuong timer,handler dien hoat su thay doi cua view
     private Handler handler = new Handler();
     private Timer timer  = new Timer();
@@ -44,13 +55,46 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //anh xa view
         anhxa();
+        //-----------hieu ung animotion--------------------------------------------
+                // Animation animation=AnimationUtils.loadAnimation(MainActivity.this,R.anim.fadein);
+                // bx.box_view.startAnimation(animation);
+        //-----------hieu ung animotion--------------------------------------------
+
+        //-----------hieu ung tat mo den0--------------------------------------------
+        // img.setImageResource(R.drawable.tran_on_off);
+        //-----------hieu ung tat mo den0--------------------------------------------
+
+        //-----------hieu ung tat mo den0--------------------------------------------
+        // TranslateAnimation animation = new TranslateAnimation(0.0f, 0.0f,
+        //                        -500.0f, 0.0f);
+        //animation.setDuration(70);
+        //img.startAnimation(animation);
+        //-----------hieu ung tat mo den0--------------------------------------------
+
+        //-----------hieu ung tat mo den0--------------------------------------------
+        //-----------hieu ung tat mo den0--------------------------------------------
+
+        //-----------demo animotion--------------------------------------------
+        final Button bt= (Button) findViewById(R.id.button);
+       bt.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+               //Animation ani = AnimationUtils.loadAnimation(MainActivity.this,R.anim.rotate);
+             // bt.startAnimation(ani); Intent resu =new Intent()
+              Intent  resu = new Intent(MainActivity.this,result.class);
+              startActivity(resu);
+
+          }
+      });
+        //-----------demo animotion--------------------------------------------
+        //----------------animotion--------------
         //set user
         us.setCore(0);
         //set bx - box di chuyen len xuong
         bx.setbox_x(200);
-        bx.setbox_y(500);
+        bx.setbox_y(800);
         bx.setbox_boxrun_x(0);
-        bx.setbox_boxrun_y(22);
+        bx.setbox_boxrun_y(20);
         bx.setimage(img);
         bx.setObjec(0);
         //set bx_ngang - box di chuyen ngang
@@ -111,6 +155,7 @@ public class MainActivity extends AppCompatActivity {
     }
     //ham chang log dien hoat thay doi cua view
     private boolean changlog(){
+
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -132,12 +177,12 @@ public class MainActivity extends AppCompatActivity {
                         // tinh diem core
                         // us.setCore();
                         // tinh diem core
-                        txcore.setText( "core : "+us.getCore() +" ob "+bx.getObjec1());
+                        txcore.setText( "core : "+us.getCore() +" ob "+bx.getObjec1()+"positon "+bx.getimage().getY());
 
                     }
                 });
             }
-        }, 0, 50);
+        }, 0,20);
         return true;
     }
     //anh xa
