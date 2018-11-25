@@ -43,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
     private boolean checker_start = false;
     //khai bao doi tuong nguoi dung
     user us = new user();
+    Intent resu;
+    //khai bao doi tuong am thanh
+    public static SoundPlayer sp;
     // khai bao doi tuong box
     private box bx= new box();
     private box bx_ngang= new box();
@@ -55,6 +58,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //anh xa view
         anhxa();
+        // gui intent sang result class
+        resu = new Intent(getApplication(),result.class);
+        //khoi tao doi tuong am thanh
+        sp = new SoundPlayer(MainActivity.this);
         //-----------hieu ung animotion--------------------------------------------
                 // Animation animation=AnimationUtils.loadAnimation(MainActivity.this,R.anim.fadein);
                 // bx.box_view.startAnimation(animation);
@@ -75,28 +82,22 @@ public class MainActivity extends AppCompatActivity {
         //-----------hieu ung tat mo den0--------------------------------------------
 
         //-----------demo animotion--------------------------------------------
-        final Button bt= (Button) findViewById(R.id.button);
-       bt.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-               //Animation ani = AnimationUtils.loadAnimation(MainActivity.this,R.anim.rotate);
-             // bt.startAnimation(ani); Intent resu =new Intent()
-              Intent  resu = new Intent(MainActivity.this,result.class);
-              startActivity(resu);
 
-          }
-      });
         //-----------demo animotion--------------------------------------------
         //----------------animotion--------------
         //set user
         us.setCore(0);
+        us.setCount_timer(0);
+        us.setPriod(20);
+        us.setLevel(0);
         //set bx - box di chuyen len xuong
         bx.setbox_x(200);
         bx.setbox_y(800);
         bx.setbox_boxrun_x(0);
         bx.setbox_boxrun_y(20);
         bx.setimage(img);
-        bx.setObjec(0);
+        bx.setObjec(1);
+        bx.setIsbox(true);
         //set bx_ngang - box di chuyen ngang
         bx_ngang.setbox_x(-80);
         bx_ngang.setbox_y(-80);
@@ -104,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
         bx_ngang.setbox_boxrun_y(0);
         bx_ngang.setimage(img1);
         bx_ngang.setObjec(1);
+        bx_ngang.setIsbox(false);
         //set bx_ngang - box di chuyen ngang 2
         bx_ngang2.setbox_x(-80);
         bx_ngang2.setbox_y(-80);
@@ -111,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
         bx_ngang2.setbox_boxrun_y(0);
         bx_ngang2.setimage(img2);
         bx_ngang2.setObjec(2);
+        bx_ngang2.setIsbox(false);
         //set bx_ngang - box di chuyen ngang 3
         bx_ngang3.setbox_x(-80);
         bx_ngang3.setbox_y(-80);
@@ -118,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
         bx_ngang3.setbox_boxrun_y(0);
         bx_ngang3.setimage(img3);
         bx_ngang3.setObjec(3);
+        bx_ngang3.setIsbox(false);
     }
     // ham nay duoc goi khi khong cham va cham len man hinh
     public boolean onTouchEvent(MotionEvent  ev){
@@ -162,6 +166,17 @@ public class MainActivity extends AppCompatActivity {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
+                        //goi count
+                        us.add_count();
+                        // set timer intent to class different method game over
+                        us.over();
+                        if(us.isIs_over()==true) {
+                            sp.playsoundover();
+                            resu.putExtra("core",us.getCore());
+                            timer.cancel();
+                            startActivity(resu);
+                        }
+
                         // box di chuyen len xuong
                         bx.review();
 
@@ -177,12 +192,12 @@ public class MainActivity extends AppCompatActivity {
                         // tinh diem core
                         // us.setCore();
                         // tinh diem core
-                        txcore.setText( "core : "+us.getCore() +" ob "+bx.getObjec1()+"positon "+bx.getimage().getY());
+                        txcore.setText( "Level "+us.getLevel()+" core : "+us.getCore() +" ob "+bx.getObjec1()+"positon "+bx.getimage().getY()+" count: "+us.time_count());
 
                     }
                 });
             }
-        }, 0,20);
+        }, 0,us.getPriod());
         return true;
     }
     //anh xa

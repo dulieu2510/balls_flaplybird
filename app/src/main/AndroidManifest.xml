@@ -17,6 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".result"></activity>
+        <activity android:name=".user"></activity>
     </application>
 
 </manifest>

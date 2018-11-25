@@ -18,4 +18,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="250"/>
+
+    <TextView
+        android:id="@+id/result_hightcore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hight core: 0" />
+
+    <Button
+        android:id="@+id/result_tryagain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Try Again" />
+
 </LinearLayout>
